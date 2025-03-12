@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Solar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffcc00;
+        }
+        .chat-container {
+            width: 80%;
+            max-width: 500px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌞 Chat con el Sol 🌞</h1>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <input type="text" id="user-input" class="input-box" placeholder="Escribe tu pregunta..." onkeypress="if(event.key === 'Enter') sendMessage()">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let input = document.getElementById("user-input").value;
+            if (input.trim() === "") return;
+            
+            let chatBox = document.getElementById("chat-box");
+            let userMessage = `<p><strong>Tú:</strong> ${input}</p>`;
+            chatBox.innerHTML += userMessage;
+            document.getElementById("user-input").value = "";
+            
+            setTimeout(() => {
+                let response = getResponse(input);
+                let botMessage = `<p><strong>Sol:</strong> ${response}</p>`;
+                chatBox.innerHTML += botMessage;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        function getResponse(input) {
+            let responses = {
+                "hola": "¡Hola, pequeño planeta! ¿En qué puedo iluminarte hoy? ☀️",
+                "cuéntame sobre marte": "Marte es mi hijo rojo y temperamental. Tiene tormentas de polvo gigantes y sueña con albergar vida algún día. 🔴",
+                "cuéntame sobre júpiter": "Júpiter es el gigante de la familia. Su gran mancha roja es una tormenta que ha durado siglos. ¡Menudo carácter! 🌪️"
+            };
+            return responses[input.toLowerCase()] || "Lo siento, no entiendo tu pregunta. Pregunta sobre un planeta o salúdame ☀️";
+        }
+    </script>
+</body>
+</html>
